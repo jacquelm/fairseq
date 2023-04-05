@@ -18,7 +18,11 @@ import soundfile
 def get_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "root", metavar="DIR", help="root directory containing flac files to index"
+        "--root",
+        type=str,
+        required=True,
+        metavar="DIR",
+        help="root directory containing flac files to index",
     )
     parser.add_argument(
         "--valid-percent",
