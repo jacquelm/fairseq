@@ -8,7 +8,7 @@ import logging
 import os
 import sys
 import numpy as np
-
+from tqdm import tqdm
 import joblib
 
 if os.path.exists("/home/maxime/Documents/Code/Neural_Network/Pytorch/fairseq"):
@@ -119,7 +119,7 @@ def main(args, logger):
     os.makedirs(os.path.dirname(args.out_quantized_file_path), exist_ok=True)
     print(f"Writing quantized predictions to {args.out_quantized_file_path}")
     with open(args.out_quantized_file_path, "w") as fout:
-        for i, feats in enumerate(features_batch):
+        for i, feats in enumerate(tqdm(features_batch)):
             pred = kmeans_model.predict(feats)
             pred_str = " ".join(str(p) for p in pred)
             base_fname = os.path.basename(fnames[i]).rstrip(
