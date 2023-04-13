@@ -113,11 +113,13 @@ def main(args, logger):
     logger.info(f"Loading K-means model from {args.kmeans_model_path} ...")
     kmeans_model = joblib.load(open(args.kmeans_model_path, "rb"))
     kmeans_model.verbose = False
+    kmeans_model._n_threads = 40
 
     _, fnames, _ = get_audio_files(args.manifest_path)
 
     os.makedirs(os.path.dirname(args.out_quantized_file_path), exist_ok=True)
     print(f"Writing quantized predictions to {args.out_quantized_file_path}")
+
     with open(args.out_quantized_file_path, "w") as fout:
         for i, feats in enumerate(tqdm(features_batch)):
             pred = kmeans_model.predict(feats)
