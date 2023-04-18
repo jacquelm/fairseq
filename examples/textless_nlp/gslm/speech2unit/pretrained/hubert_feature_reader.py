@@ -40,7 +40,7 @@ class HubertFeatureReader:
         if wav.ndim == 2:
             wav = wav.mean(-1)
         assert wav.ndim == 1, wav.ndim
-        print("Task", self.task.cfg)
+        # print("Task", self.task.cfg)
         assert sr == self.task.cfg.sample_rate, sr
         if ref_len is not None and abs(ref_len - len(wav)) > 160:
             print(f"ref {ref_len} != read {len(wav)} ({path})")
