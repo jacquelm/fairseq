@@ -50,10 +50,7 @@ def main():
                         items = tline.strip().split()
                         texts[part] = " ".join(items)
                 transcriptions[dir] = texts
-            print(line)
-            print(dir)
-            print(part)
-            print(transcriptions[dir])
+
             assert part in transcriptions[dir]
             print(transcriptions[dir][part], file=wrd_out)
             print(
