@@ -39,7 +39,6 @@ def main():
             if dir not in transcriptions:
                 trans_path = os.path.join(txt_path, line.rsplit("_")[0])
                 txt_files = glob.glob(trans_path + "/*.txt")
-                print(line)
                 txt_file = [
                     x for x in txt_files if x.rsplit("/")[-1].rsplit(".")[0] in line
                 ][0]
@@ -51,6 +50,7 @@ def main():
                         items = tline.strip().split()
                         texts[part] = " ".join(items)
                 transcriptions[dir] = texts
+            print(line)
             print(dir)
             print(part)
             assert part in transcriptions[dir]
