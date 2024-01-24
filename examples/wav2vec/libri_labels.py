@@ -34,7 +34,7 @@ def main():
         txt_path = args.trans
         for line in tsv:
             line = line.strip()
-            dir = os.path.dirname(line)
+            dir = os.path.basename(line).split(".")[0]
             if dir not in transcriptions:
                 parts = dir.split(os.path.sep)
                 trans_path = os.path.join(txt_path, line.rsplit("_")[0])
