@@ -10,11 +10,13 @@ Helper script to pre-compute embeddings for a flashlight (previously called wav2
 
 import argparse
 import os
+import glob
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("tsv")
+    parser.add_argument("--trans", required=True)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--output-name", required=True)
     args = parser.parse_args()
@@ -29,13 +31,16 @@ def main():
         os.path.join(args.output_dir, args.output_name + ".wrd"), "w"
     ) as wrd_out:
         root = next(tsv).strip()
+        txt_path = args.output_dir
         for line in tsv:
             line = line.strip()
             dir = os.path.dirname(line)
             if dir not in transcriptions:
                 parts = dir.split(os.path.sep)
-                trans_path = f"{parts[-2]}-{parts[-1]}.trans.txt"
-                path = os.path.join(root, dir, trans_path)
+                trans_path = os.path.join(txt_path, line.rsplit("_")[0])
+                txt_files = glob.glob(trans_path + "/*.txt")
+                txt_file = [x for x in txt_files if x.rsplit(".")[0] in line][0]
+                path = os.path.join(root, dir, txt_file)
                 assert os.path.exists(path)
                 texts = {}
                 with open(path, "r") as trans_f:
