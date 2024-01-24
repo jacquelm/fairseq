@@ -35,7 +35,7 @@ def main():
         for line in tsv:
             line = line.strip()
             dir = line.rsplit("_")[0]
-            part = os.path.basename(line).split(".")[0]
+            part = dir
             if dir not in transcriptions:
                 trans_path = os.path.join(txt_path, line.rsplit("_")[0])
                 txt_files = glob.glob(trans_path + "/*.txt")
