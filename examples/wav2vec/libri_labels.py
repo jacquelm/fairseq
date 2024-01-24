@@ -39,13 +39,12 @@ def main():
                 parts = dir.split(os.path.sep)
                 trans_path = os.path.join(txt_path, line.rsplit("_")[0])
                 txt_files = glob.glob(trans_path + "/*.txt")
-                print(trans_path)
-                print(txt_files)
                 print(line)
                 txt_file = [
                     x for x in txt_files if x.rsplit("/")[-1].rsplit(".")[0] in line
                 ][0]
                 path = txt_file
+                print(path)
                 assert os.path.exists(path)
                 texts = {}
                 with open(path, "r") as trans_f:
