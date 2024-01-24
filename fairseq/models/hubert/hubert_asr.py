@@ -136,6 +136,13 @@ class HubertAsrConfig(FairseqDataclass):
     )
     normalize: bool = II("task.normalize")
     data: str = II("task.data")
+    autoregressive: bool = field(
+        default=False,
+        metadata={
+            "help": "required for autoregressive decoders (like seq2seq models); "
+            "adds 'prev_output_tokens' to input and appends eos to target"
+        },
+    )
 
     # this holds the loaded hubert args
     w2v_args: Any = None
@@ -394,7 +401,6 @@ class HubertEncoder(FairseqEncoder):
         self.num_updates = num_updates
 
     def forward(self, source, padding_mask, tbc=True, **kwargs):
-
         w2v_args = {
             "source": source,
             "padding_mask": padding_mask,
@@ -550,7 +556,7 @@ class TransformerDecoder(FairseqIncrementalDecoder):
             tmp = torch.zeros(
                 [len(prev_output_tokens), max_len], device=prev_output_tokens[0].device
             )
-            for (i, p) in enumerate(prev_output_tokens):
+            for i, p in enumerate(prev_output_tokens):
                 tmp[i, : len(p)] = p
             prev_output_tokens = tmp
         prev_output_tokens = prev_output_tokens.long()
