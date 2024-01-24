@@ -52,7 +52,9 @@ def main():
                         items = tline.strip().split()
                         texts[items[0]] = " ".join(items[1:])
                 transcriptions[dir] = texts
+            print(transcriptions)
             part = os.path.basename(line).split(".")[0]
+            print(part)
             assert part in transcriptions[dir]
             print(transcriptions[dir][part], file=wrd_out)
             print(
