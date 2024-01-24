@@ -51,7 +51,7 @@ def main():
                     for tline in trans_f:
                         items = tline.strip().split()
                         texts[part] = " ".join(items)
-                transcriptions[dir][part] = texts
+                transcriptions[dir] = texts
             print(transcriptions)
             print(part)
             assert part in transcriptions[dir]
