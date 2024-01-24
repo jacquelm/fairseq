@@ -42,8 +42,10 @@ def main():
                 print(trans_path)
                 print(txt_files)
                 print(line)
-                txt_file = [x for x in txt_files if x.rsplit(".")[0] in line][0]
-                path = os.path.join(root, dir, txt_file)
+                txt_file = [
+                    x for x in txt_files if x.rsplit("/")[-1].rsplit(".")[0] in line
+                ][0]
+                path = txt_file
                 assert os.path.exists(path)
                 texts = {}
                 with open(path, "r") as trans_f:
