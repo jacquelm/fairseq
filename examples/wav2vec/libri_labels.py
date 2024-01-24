@@ -44,7 +44,6 @@ def main():
                     x for x in txt_files if x.rsplit("/")[-1].rsplit(".")[0] in line
                 ][0]
                 path = txt_file
-                print(path)
                 assert os.path.exists(path)
                 texts = {}
                 with open(path, "r") as trans_f:
@@ -52,7 +51,7 @@ def main():
                         items = tline.strip().split()
                         texts[part] = " ".join(items)
                 transcriptions[dir] = texts
-            print(transcriptions)
+            print(dir)
             print(part)
             assert part in transcriptions[dir]
             print(transcriptions[dir][part], file=wrd_out)
