@@ -34,9 +34,8 @@ def main():
         txt_path = args.trans
         for line in tsv:
             line = line.strip()
-            dir = os.path.basename(line).split(".")[0]
+            dir = line.rsplit("_")[0]
             if dir not in transcriptions:
-                parts = dir.split(os.path.sep)
                 trans_path = os.path.join(txt_path, line.rsplit("_")[0])
                 txt_files = glob.glob(trans_path + "/*.txt")
                 print(line)
@@ -50,12 +49,15 @@ def main():
                 with open(path, "r") as trans_f:
                     for tline in trans_f:
                         items = tline.strip().split()
-                        texts[items[0]] = " ".join(items[1:])
+                        texts[dir] = " ".join(items)
                 transcriptions[dir] = texts
             print(transcriptions)
-            print(transcriptions[dir], file=wrd_out)
+            part = os.path.basename(line).split(".")[0]
+            print(part)
+            assert part in transcriptions[dir]
+            print(transcriptions[dir][part], file=wrd_out)
             print(
-                " ".join(list(transcriptions[dir].replace(" ", "|"))) + " |",
+                " ".join(list(transcriptions[dir][part].replace(" ", "|"))) + " |",
                 file=ltr_out,
             )
 
