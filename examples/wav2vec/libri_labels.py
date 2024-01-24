@@ -31,7 +31,7 @@ def main():
         os.path.join(args.output_dir, args.output_name + ".wrd"), "w"
     ) as wrd_out:
         root = next(tsv).strip()
-        txt_path = args.output_dir
+        txt_path = args.trans
         for line in tsv:
             line = line.strip()
             dir = os.path.dirname(line)
